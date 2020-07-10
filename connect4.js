@@ -159,8 +159,16 @@ class Player {
 }
 
 document.getElementById('start-game').addEventListener('click', function(){
-  let player1 = new Player('black');
-  let player2 = new Player('red');
+  //set players according to chosen colors
+  let player1 = new Player(document.getElementById('player-1-color').value);
+  let player2 = new Player(document.getElementById('player-2-color').value);
+  // set default colors if none are chosen
+  if(player1.color == ''){
+    player1.color = 'blue'
+  }
+  if(player2.color == ''){
+    player2.color = 'red'
+  }
   new Game(player1, player2);
 })
 
