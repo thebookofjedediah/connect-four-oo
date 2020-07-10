@@ -6,7 +6,7 @@
  */
 
 class Game {
-  constructor(height, width){
+  constructor(height = 6, width = 7){
     this.currPlayer = 1;
     this.height = height;
     this.width = width;
@@ -26,6 +26,7 @@ class Game {
   /** makeHtmlBoard: make HTML table and row of column tops. */
   makeHtmlBoard() {
     const board = document.getElementById('board');
+    board.innerHTML = '';
 
     // make column tops (clickable area for adding a piece to that column)
     const top = document.createElement('tr');
@@ -152,7 +153,7 @@ class Game {
 }
 
 document.getElementById('start-game').addEventListener('click', function(){
-  new Game(6,7);
+  new Game();
 })
 
 
