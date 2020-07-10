@@ -6,7 +6,7 @@
  */
 
 class Game {
-  constructor(height, width, currPlayer){
+  constructor(height, width){
     this.currPlayer = 1;
     this.height = height;
     this.width = width;
@@ -80,7 +80,11 @@ class Game {
 
   /** endGame: announce game end */
   endGame(msg) {
+    const top = document.createElement('tr');
+    console.log(top)
+    top.removeEventListener('click', this.handleClick)
     alert(msg);
+
   }
 
   /** handleClick: handle click of column top to play piece */
@@ -147,4 +151,9 @@ class Game {
   }
 }
 
-new Game(6,7);
+document.getElementById('start-game').addEventListener('click', function(){
+  new Game(6,7);
+})
+
+
+
