@@ -5,7 +5,6 @@
  * board fills (tie)
  */
 
-
 class Game {
   constructor(height, width, currPlayer){
     this.currPlayer = 1;
@@ -31,6 +30,9 @@ class Game {
     // make column tops (clickable area for adding a piece to that column)
     const top = document.createElement('tr');
     top.setAttribute('id', 'column-top');
+
+    // bind to allow for findSpotForCol to work on click
+    this.handleClick = this.handleClick.bind(this);
     top.addEventListener('click', this.handleClick);
 
     for (let x = 0; x < this.width; x++) {
@@ -86,7 +88,6 @@ class Game {
     // get x from ID of clicked cell
     const x = +evt.target.id;
 
-    console.log(this)
     // get next spot in column (if none, ignore click)
     const y = this.findSpotForCol(x);
     if (y === null) {
@@ -94,8 +95,8 @@ class Game {
     }
 
     // place piece in board and add to HTML table
-    board[y][x] = currPlayer;
-    placeInTable(y, x);
+    this.board[y][x] = this.currPlayer;
+    this.placeInTable(y, x);
     
     // check for win
     if (this.checkForWin()) {
@@ -113,7 +114,7 @@ class Game {
 
   /** checkForWin: check board cell-by-cell for "does a win start here?" */
   checkForWin() {
-    function _win(cells) {
+    const _win = (cells) => {
       // Check four cells to see if they're all color of current player
       //  - cells: list of four (y, x) cells
       //  - returns true if all are legal coordinates & all match currPlayer
@@ -121,9 +122,9 @@ class Game {
       return cells.every(
         ([y, x]) =>
           y >= 0 &&
-          y < HEIGHT &&
+          y < this.height &&
           x >= 0 &&
-          x < WIDTH &&
+          x < this.width &&
           this.board[y][x] === this.currPlayer
       );
     }
